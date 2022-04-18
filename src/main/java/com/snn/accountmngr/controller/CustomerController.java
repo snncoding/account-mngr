@@ -3,6 +3,7 @@ package com.snn.accountmngr.controller;
 import com.snn.accountmngr.dto.CustomerDto;
 import com.snn.accountmngr.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -15,12 +16,12 @@ public class CustomerController {
     private CustomerService service;
 
     @GetMapping
-    public Set<CustomerDto> findAll() {
-        return service.findAll();
+    public ResponseEntity<Set<CustomerDto>> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
-    public CustomerDto create(@RequestBody CustomerDto dto) {
-        return service.create(dto);
+    public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto dto) {
+        return ResponseEntity.ok(service.create(dto));
     }
 }
