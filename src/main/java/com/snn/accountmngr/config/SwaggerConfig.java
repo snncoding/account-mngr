@@ -20,7 +20,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Account Manager API")
+        return new ApiInfoBuilder().title("Account ManagerAPI")
                 .description("Code Assignment About Customer Account Init")
                 .contact(new Contact("", "", "sinandobur@gmail.com")).license("Snn License")
                 .licenseUrl("sinandobur@gmail.com").version("1.0").build();
