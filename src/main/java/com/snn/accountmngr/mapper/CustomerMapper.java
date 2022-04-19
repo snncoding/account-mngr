@@ -5,6 +5,9 @@ import com.snn.accountmngr.model.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Component
 @AllArgsConstructor
 public class CustomerMapper {
@@ -17,18 +20,11 @@ public class CustomerMapper {
                 id(entity.getId()).
                 name(entity.getName()).
                 surname(entity.getSurname()).
-                accounts(accountMapper.toAccountDtos(entity.getAccounts())).
-                build();
-    }
-
-
-    private Customer mapCustomerDtoToCustomer(CustomerDto from) {
-        return Customer.
-                builder().
-                id(from.getId()).
-                name(from.getName()).
-                surname(from.getSurname()).
-                accounts(accountMapper.toAccounts(from.getAccounts())).
+                accounts(
+                        Objects.requireNonNull(entity.getAccounts()).
+                                stream().
+                                map(accountMapper::toAccountDto).
+                                collect(Collectors.toList())).
                 build();
     }
 
@@ -38,7 +34,12 @@ public class CustomerMapper {
                 id(from.getId()).
                 name(from.getName()).
                 surname(from.getSurname()).
-                accounts(accountMapper.toAccounts(from.getAccounts())).
+                accounts(
+                        Objects.requireNonNull(from.getAccounts()).
+                                stream().
+                                map(accountMapper::toAccount).
+                                collect(Collectors.toSet())
+                ).
                 build();
     }
 }

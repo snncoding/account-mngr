@@ -4,9 +4,12 @@ import com.snn.accountmngr.dto.AccountDto;
 import com.snn.accountmngr.dto.AccountInfoDto;
 import com.snn.accountmngr.model.Account;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,41 +27,29 @@ public class AccountMapper {
                 builder().
                 id(from.getId()).
                 credit(from.getCredit()).
+                transactions(
+                        Objects.requireNonNull(from.getTransactions()).
+                                stream().map(transactionMapper::toTransactionDto).
+                                collect(Collectors.toSet())
+                ).build();
+    }
+
+    public AccountInfoDto toAccountInfoDto(Account from) {
+        return AccountInfoDto.
+                builder().
+                name(from.getCustomer().getName()).
+                surname(from.getCustomer().getSurname()).
+                credit(from.getCredit()).
+                transactions(
+                        Objects.requireNonNull(from.getTransactions()).
+                                stream().
+                                map(transactionMapper::toTransactionDto).
+                                collect(Collectors.toSet())
+                ).
                 build();
     }
 
-    public List<AccountInfoDto> toAccountInfoDto(List<Account> from) {
-        return from.
-                stream().
-                map(p -> AccountInfoDto.
-                        builder().
-                        name(p.getCustomer().getName()).
-                        surname(p.getCustomer().getSurname()).
-                        credit(p.getCredit()).
-                        transactions(transactionMapper.toTransaction(p.getTransactions())).
-                        build()).collect(toList());
-    }
-
-    public List<AccountDto> toAccountDtos(Set<Account> from) {
-        if (from == null)
-            return null;
-        return from.
-                stream().
-                map(k -> toAccountDto(k)).
-                collect(Collectors.toList());
-    }
-
-
-    public Set<Account> toAccounts(List<AccountDto> from) {
-        if (from == null)
-            return null;
-
-        return from.
-                stream().
-                map(p -> Account.
-                        builder().
-                        id(p.getId()).
-                        credit(p.getCredit()).
-                        build()).collect(toSet());
+    public Account toAccount(AccountDto from) {
+        return new Account(from.getId(), from.getCredit(), null, null);
     }
 }
