@@ -33,10 +33,11 @@ Application also runs on heroku https://account-mngr.herokuapp.com/swagger-ui.ht
 It may be closed because it is a free account. It is redeployed depending on the update of the main branch by the github workflow.
 
 ### Maven
-$ cd /account-mngr
-$ mvn clean install
-$ mvn spring-boot:run
-
+```ssh
+ $ cd /account-mngr
+ $ mvn clean install
+ $ mvn spring-boot:run
+```
 Swagger UI will be run on this url
 http://localhost:8080/swagger-ui.html
 
