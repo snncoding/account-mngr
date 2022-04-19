@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,18 +24,11 @@ public class AccountService {
 
     private final CustomerService customerService;
     private final AccountRepository accountRepository;
-    private final TransactionService transactionService;
     private final AccountMapper accountMapper;
 
     public AccountDto create(AccountInitDto dto) {
         Customer customer = customerService.findById(dto.getCustomerId());
-        Account account = Account.builder().
-                credit(dto.getInitCredit()).
-                customer(customer).
-                transactions(new HashSet<>()).
-                build();
-
-        AccountDto accountDto = accountMapper.toAccountDto(accountRepository.save(account));
+        Account account = new Account(dto.getInitCredit(), customer);
 
         if (BigDecimal.ZERO.compareTo(dto.getInitCredit()) < 0) {
             Transaction transaction = Transaction.
@@ -43,14 +37,22 @@ public class AccountService {
                     credit(dto.getInitCredit()).
                     account(account).
                     build();
-            transactionService.create(transaction);
+
+            account.getTransactions().add(transaction);
         }
+        Account save = accountRepository.save(account);
+        AccountDto accountDto = accountMapper.toAccountDto(save);
+
         return accountDto;
     }
 
     public List<AccountInfoDto> getAccountInfo() {
         List<Account> accounts = accountRepository.findAll();
-        return accountMapper.toAccountInfoDto(accounts);
+
+        return Objects.requireNonNull(accounts).
+                stream().
+                map(accountMapper::toAccountInfoDto).
+                collect(Collectors.toList());
     }
 
 

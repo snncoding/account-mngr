@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Builder
 @Data
@@ -12,5 +13,5 @@ import java.math.BigDecimal;
 public class AccountDto {
     private Integer id;
     private BigDecimal credit;
-    private CustomerDto customer;
+    private Set<TransactionDto> transactions;
 }

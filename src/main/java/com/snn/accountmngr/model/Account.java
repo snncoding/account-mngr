@@ -1,9 +1,13 @@
 package com.snn.accountmngr.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,12 +27,17 @@ public class Account {
     private Customer customer;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+    private Set<Transaction> transactions = new HashSet<>();
+
+    public Account(BigDecimal initCredit, Customer customer) {
+        this.credit = initCredit;
+        this.customer = customer;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (id == null || o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return id.equals(account.id);
     }
