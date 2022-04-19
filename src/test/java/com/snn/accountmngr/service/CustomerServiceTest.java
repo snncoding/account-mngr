@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
@@ -26,7 +25,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 class CustomerServiceTest {
 
@@ -101,7 +101,7 @@ class CustomerServiceTest {
 
         assertEquals(result, customer, "Result not equal with expected object");
 
-        assertThrows(MyEntityNotFoundException.class,()->customerService.findById(1111), "Expected Not found exception");
+        assertThrows(MyEntityNotFoundException.class, () -> customerService.findById(1111), "Expected Not found exception");
 
     }
 }

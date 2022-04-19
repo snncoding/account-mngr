@@ -1,11 +1,16 @@
 package com.snn.accountmngr.mapper;
 
+import com.snn.accountmngr.dto.AccountDto;
 import com.snn.accountmngr.dto.CustomerDto;
+import com.snn.accountmngr.model.Account;
 import com.snn.accountmngr.model.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,7 +40,7 @@ public class CustomerMapper {
                 name(from.getName()).
                 surname(from.getSurname()).
                 accounts(
-                        Objects.requireNonNull(from.getAccounts()).
+                        (from.getAccounts() == null ? new ArrayList<AccountDto>() : from.getAccounts()).
                                 stream().
                                 map(accountMapper::toAccount).
                                 collect(Collectors.toSet())

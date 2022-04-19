@@ -4,17 +4,10 @@ import com.snn.accountmngr.dto.AccountDto;
 import com.snn.accountmngr.dto.AccountInfoDto;
 import com.snn.accountmngr.model.Account;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 @Component
 @AllArgsConstructor

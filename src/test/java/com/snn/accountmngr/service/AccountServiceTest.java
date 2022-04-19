@@ -11,15 +11,11 @@ import com.snn.accountmngr.model.Customer;
 import com.snn.accountmngr.model.Transaction;
 import com.snn.accountmngr.repository.AccountRepository;
 import com.snn.accountmngr.repository.CustomerRepository;
-import com.snn.accountmngr.repository.TransactionRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -82,7 +78,7 @@ class AccountServiceTest {
 
         AccountDto accountDto = accountService.create(new AccountInitDto(account.getCustomer().getId(), account.getCredit()));
 
-        assertNotNull(accountDto,"After account create service must return new AccountDto, but it is returned null");
+        assertNotNull(accountDto, "After account create service must return new AccountDto, but it is returned null");
         assertEquals(accountDto.getId(), account.getId(), "Expected object not equal");
     }
 

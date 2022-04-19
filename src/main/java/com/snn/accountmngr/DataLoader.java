@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 @AllArgsConstructor
 public class DataLoader implements CommandLineRunner {
@@ -15,8 +17,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        service.create(CustomerDto.builder().name("John").surname("Wick").build());
-        service.create(CustomerDto.builder().name("Jason").surname("Bourne").build());
-        service.create(CustomerDto.builder().name("Trinity").surname("Neo").build());
+        service.create(CustomerDto.builder().name("John").surname("Wick").accounts(new ArrayList<>()).build());
+        service.create(CustomerDto.builder().name("Jason").surname("Bourne").accounts(new ArrayList<>()).build());
+        service.create(CustomerDto.builder().name("Trinity").surname("Neo").accounts(new ArrayList<>()).build());
     }
 }
