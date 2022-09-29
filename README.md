@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/snnd/account-mngr/_apis/build/status/snncoding.account-mngr?branchName=main)](https://dev.azure.com/snnd/account-mngr/_build/latest?definitionId=1&branchName=main)
 # account-mngr Rest Api For Existing Customer
 ----------------------------
 ## Spring Boot
@@ -40,4 +41,5 @@ It may be closed because it is a free account. It is redeployed depending on the
 ```
 Swagger UI will be run on this url
 http://localhost:8080/swagger-ui.html
+
 
